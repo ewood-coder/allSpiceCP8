@@ -35,7 +35,16 @@ public class Startup
 		services.AddScoped<AccountsRepository>();
 		services.AddScoped<AccountService>();
 
-		// SECTION: INSERT YOUR STUFF HERE
+		// SECTION: RECIPES
+		services.AddScoped<RecipesRepository>();
+		services.AddScoped<RecipesService>();
+
+		// SECTION: INGREDIENTS
+		services.AddScoped<IngredientsRepository>();
+		services.AddScoped<IngredientsService>();
+
+		// SECTION: FAVORITES
+
 
 	}
 
