@@ -2,15 +2,18 @@
 import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
+import { Recipe } from '../models/Recipe.js';
+import { recipesService } from '../services/RecipesService.js';
 
 
+// const recipes = computed(() => AppState.recipes)
 
 const filterBy = ref('all')
 
-// const events = computed(() => {
-// 	if (filterBy.value == 'all') return AppState.events
-// 	return AppState.events.filter(event => event.type == filterBy.value)
-// })
+const recipes = computed(() => {
+	if (filterBy.value == 'all') return AppState.recipes
+	return AppState.recipes.filter(event => event.category == filterBy.value)
+})
 
 const filters = [
 	{
@@ -39,18 +42,17 @@ const filters = [
 	}
 ]
 
-// async function getEvents() {
-// 	try {
-// 		await eventsService.getEvents()
-// 	} catch (error) {
-// 		Pop.toast("Could not get events", 'error')
-// 		console.error(error)
-// 	}
-// }
+async function getRecipes() {
+	try {
+		await recipesService.getRecipes()
+	} catch (error) {
+		Pop.error(error)
+	}
+}
 
-// onMounted(() => {
-// 	getEvents()
-// })
+onMounted(() => {
+	getRecipes()
+})
 
 </script>
 
@@ -83,47 +85,50 @@ const filters = [
 	<!-- Jumbotron -->
 
 
+	<div class="container-fluid">
+		<!-- SECTION: RECIPES -->
+		<section class="row my-5 pt-3 text-center d-flex justify-content-center">
 
-	<!-- SECTION: RECIPES -->
-	<section class="row my-5 pt-3 text-center d-flex justify-content-center">
-
-		<div class="accordion accordion-item col-10 accordionContainer" id="accordion2">
-			<h2 class="accordion-header">
-				<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse"
-					data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+			<div class="accordion accordion-item col-10 accordionContainer" id="accordion2">
+				<h2 class="accordion-header">
+					<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse"
+						data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
 
 
-					<div>
-						<h4 class="text-center mb-0">Explore Food Categories:</h4>
+						<div>
+							<h4 class="text-center mb-0">Explore Food Categories:</h4>
+						</div>
+					</button>
+				</h2>
+
+				<div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordion2">
+					<div class="accordion-body d-flex flex-wrap">
+
+						<div class="col-12 col-md-6 text-center fs-3 p-2 py" v-for="filterObj in filters"
+							:key="filterObj.name">
+							<div @click="filterBy = filterObj.name" role="button" class="filter-card rounded selectable"
+								:style="`--bg-img: url(${filterObj.backgroundImage})`">{{ filterObj.name }}</div>
+						</div>
+
 					</div>
-				</button>
-			</h2>
-
-			<div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordion2">
-				<div class="accordion-body d-flex flex-wrap">
-
-					<div class="col-12 col-md-6 text-center fs-3 p-2 py" v-for="filterObj in filters" :key="filterObj.name">
-						<div @click="filterBy = filterObj.name" role="button" class="filter-card rounded selectable"
-							:style="`--bg-img: url(${filterObj.backgroundImage})`">{{ filterObj.name }}</div>
-					</div>
-
 				</div>
 			</div>
-		</div>
 
-	</section>
-
+		</section>
 
 
-	<section class="p-1 p-md-2 d-flex justify-content-center gap-3 card-group">
-		<h2 class="mb-3 text-center"><u>Recipes</u></h2>
-		<div v-for="recipe in recipes" :key="recipe.id" class="mb-4">
+		<hr class="my-5" />
 
-			<RecipeCard :recipe="recipe" />
 
-		</div>
-	</section>
+		<!-- <h2 class="mb-4 text-center"><u>Recipes</u></h2> -->
+		<section class="d-flex flex-wrap justify-content-center gap-3">
+			<div v-for="recipe in recipes" :key="recipe.id" class="mb-4">
 
+				<RecipeCard :recipe="recipe" />
+
+			</div>
+		</section>
+	</div>
 
 	<!-- NOTE the modal has to be here, it's just hidden from view -->
 	<!-- <ModalWrapper modalId="eventFormModal">

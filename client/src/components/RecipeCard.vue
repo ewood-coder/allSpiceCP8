@@ -2,35 +2,35 @@
 import { Recipe } from '../models/Recipe.js';
 
 defineProps({
-	cult: { type: Cult, required: true }
+	recipe: { type: Recipe, required: true }
 })
 </script>
 
 
 <template>
-	<div class="cult-card">
-		<div class="d-flex align-items-center gap-3 p-4">
-			<img :src="cult.leader.picture" :alt="cult.leader.name" class="profile-picture">
-			<p class="fs-2 mb-0">{{ cult.leader.name }}</p>
-		</div>
-		<img :src="cult.coverImg" :alt="cult.name" class="cult-img">
-		<div class="p-4">
-			<p class="fs-3">{{ cult.name }}</p>
+	<div class="recipe-card rounded-4">
+		<div class="px-2 py-1">{{ recipe.category }}</div>
+		<img :src="recipe.img" :alt="recipe.title" class="recipe-img">
+		<div class="px-4 py-2">
+			<div class="fs-3">{{ recipe.title }}</div>
 			<!-- FIXME truncate text -->
-			<p>{{ cult.description }}</p>
-			<div class="text-end">
-				<RouterLink :to="{ name: 'Cult Details', params: { cultId: cult.id } }">
+			<!-- <div class="text-end">
+				<RouterLink :to="{ name: 'recipe Details', params: { recipeId: recipe.id } }">
 					<button class="btn btn-danger">See More</button>
 				</RouterLink>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
 
 
 <style scoped>
-.cult-card {
+.recipe-card {
 	background-color: #3F3B3B;
+	color: white;
+
+	width: auto;
+	height: 100%;
 }
 
 .profile-picture {
@@ -39,7 +39,7 @@ defineProps({
 	border-radius: 50%;
 }
 
-.cult-img {
+.recipe-img {
 	width: 100%;
 	height: 40vh;
 	object-fit: cover;

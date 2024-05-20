@@ -9,7 +9,7 @@ import Navbar from './components/Navbar.vue'
 	<header>
 		<Navbar />
 	</header>
-	<main>
+	<main class="fontPage">
 		<router-view />
 	</main>
 </template>
@@ -27,5 +27,9 @@ footer {
 	display: grid;
 	place-content: center;
 	height: 32px;
+}
+
+.fontPage {
+	font-family: "Sahitya", serif;
 }
 </style>
