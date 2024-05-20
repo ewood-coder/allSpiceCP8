@@ -50,7 +50,7 @@ public class RecipesService
 
 		if (recipeToUpdate.CreatorId != userId)
 		{
-			throw new Exception("YOU ARE NOT THE CREATOR OF THIS Recipe PAL");
+			throw new Exception("YOU ARE NOT THE CREATOR OF THIS RECIPE PAL");
 		}
 
 		recipeToUpdate.Title = recipeData.Title ?? recipeToUpdate.Title;

@@ -6,11 +6,13 @@ public class IngredientsController : ControllerBase
 {
 	private readonly IngredientsService _ingredientsService;
 	private readonly Auth0Provider _auth0Provider;
+	private readonly RecipesService _recipesService;
 
-	public IngredientsController(IngredientsService ingredientsService, Auth0Provider auth0Provider)
+	public IngredientsController(IngredientsService ingredientsService, Auth0Provider auth0Provider, RecipesService recipesService)
 	{
 		_ingredientsService = ingredientsService;
 		_auth0Provider = auth0Provider;
+		_recipesService = recipesService;
 	}
 
 
@@ -24,7 +26,7 @@ public class IngredientsController : ControllerBase
 		try
 		{
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-			Ingredient ingredient = _ingredientsService.CreateIngredient(ingredientData);
+			Ingredient ingredient = _ingredientsService.CreateIngredient(ingredientData, userInfo.Id);
 			return Ok(ingredient);
 		}
 		catch (Exception exception)

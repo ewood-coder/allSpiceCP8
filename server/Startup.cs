@@ -44,7 +44,8 @@ public class Startup
 		services.AddScoped<IngredientsService>();
 
 		// SECTION: FAVORITES
-
+		services.AddScoped<FavoritesRepository>();
+		services.AddScoped<FavoritesService>();
 
 	}
 

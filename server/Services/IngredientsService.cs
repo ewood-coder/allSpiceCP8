@@ -15,17 +15,16 @@ public class IngredientsService
 	// SECTION: FUNCTIONS ---------------------------------------------
 
 	// STUB: CREATE INGREDIENT
-	internal Ingredient CreateIngredient(Ingredient ingredientData)
+	internal Ingredient CreateIngredient(Ingredient ingredientData, string userId)
 	{
 		Recipe recipe = _recipesService.GetRecipeById(ingredientData.RecipeId);
 
-		if (recipe == null)
+		if (recipe.CreatorId != userId)
 		{
-			throw new Exception($"'{recipe.Title}' has been deleted");
+			throw new Exception("YOU CAN'T ADD AN INGREDIENT TO SOMEONE ELSES RECIPE");
 		}
 
 		Ingredient ingredient = _ingredientsRepository.CreateIngredient(ingredientData);
-
 		return ingredient;
 	}
 
@@ -50,11 +49,13 @@ public class IngredientsService
 	internal string DestroyIngredient(int ingredientId, string userId)
 	{
 		Ingredient ingredient = GetIngredientById(ingredientId);
+		Recipe recipe = _recipesService.GetRecipeById(ingredient.RecipeId);
 
-		// if (ingredient.CreatorId != userId)
-		// {
-		// 	throw new Exception("YOU CANNOT DELETE A INGREDIENT YOU DID NOT CREATE");
-		// }
+
+		if (recipe.CreatorId != userId)
+		{
+			throw new Exception("YOU CANNOT DELETE A INGREDIENT YOU DID NOT CREATE");
+		}
 
 		_ingredientsRepository.DestroyIngredient(ingredientId);
 
