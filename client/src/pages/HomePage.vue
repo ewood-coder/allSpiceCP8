@@ -203,7 +203,7 @@ onMounted(() => {
 .accordion-button:not(.collapsed) {
 	color: var(--bs-accordion-active-color);
 	background-color: white;
-	box-shadow: inset 0 calc(-1* var(--bs-accordion-border-width)) 0 #000000;
+	box-shadow: inset 0 calc(-1* var(--bs-accordion-border-width)) 0 #ffffff;
 }
 
 .accordion-button:is(.collapsed) {
@@ -215,7 +215,7 @@ onMounted(() => {
 .accordion-button[data-v-81550567]:not(.collapsed) {
 	color: var(--forestGreen);
 	background-color: white;
-	box-shadow: inset 0 calc(-1* var(--bs-accordion-border-width)) 0 #000000;
+	box-shadow: inset 0 calc(-1* var(--bs-accordion-border-width)) 0 #ffffff;
 }
 
 .accordion-button[data-v-81550567]:is(.collapsed) {
