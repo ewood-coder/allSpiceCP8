@@ -7,12 +7,13 @@ import { Favorite } from '../models/Favorite.js';
 
 
 const account = computed(() => AppState.account)
-// const favorite = computed(() => AppState.favorites)
+const favorites = computed(() => AppState.favorites)
+const recipes = computed(() => AppState.recipes)
+const isFavorited = computed(() => AppState.favorites.some(favorite => favorite.recipeId == props.recipe.id))
 
 
-defineProps({
+const props = defineProps({
 	recipe: { type: Recipe, required: true },
-	favorite: { type: Favorite, required: true }
 })
 </script>
 
@@ -23,19 +24,19 @@ defineProps({
 
 			<div class="px-2 py-1 fontSize">{{ recipe.category }}</div>
 
-			<div v-if="!account?.id">
+			<div v-if="account == null">
 				<i class="mdi mdi-heart-off-outline fs-3 rounded-4 btnLikeOff px-2" title="Login Required"></i>
 			</div>
 
 			<div v-else>
-				<button v-if="!favorite.id" @click="FavoriteRecipe()" class="btnLike rounded-4"
+				<button v-if="!isFavorited" @click="FavoriteRecipe()" class="btnLike rounded-4"
 					:title="`Favorite this Recipe`">
-					<i class="mdi mdi-heart-outline fs-3 px-2"></i>
+					<i class="mdi mdi-heart-outline fs-3"></i>
 				</button>
 
-				<button v-if="favorite.id" @click="FavoriteRecipe()" class="btnAlreadyLiked rounded-4"
+				<button v-if="isFavorited" @click="FavoriteRecipe()" class="btnAlreadyLiked rounded-4"
 					:title="`Unfavorite this Recipe`">
-					<i class="mdi mdi-heart fs-3 px-2"></i>
+					<i class="mdi mdi-heart fs-3"></i>
 				</button>
 			</div>
 		</div>
@@ -51,7 +52,7 @@ defineProps({
 <style scoped>
 .recipe-card {
 	/* background-color: #3F3B3B; */
-	background-color: #FEA993;
+	background-color: #ff9074;
 
 	color: white;
 
@@ -75,19 +76,19 @@ defineProps({
 
 .btnLike {
 	color: white;
-	background-color: none;
+	background-color: rgba(255, 255, 255, 0);
 	border: none;
 }
 
 .btnAlreadyLiked {
 	color: #e44b7e;
-	background-color: none;
+	background-color: rgba(255, 255, 255, 0);
 	border: none;
 }
 
 .btnLikeOff {
 	color: white;
-	background-color: none;
+	background-color: rgba(255, 255, 255, 0);
 	border: none;
 }
 
