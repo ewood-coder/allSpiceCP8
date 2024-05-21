@@ -18,7 +18,7 @@ function toggleTheme() {
 </script>
 
 <template>
-	<nav class="navbar navbar-expand-sm navbar-dark bg-light px-3 py-4 navbarBoxShadow">
+	<nav class="navbar navbar-expand-sm navbar-light bg-light px-3 py-md-4 navbarBoxShadow">
 		<router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
 			<div class="d-flex flex-column align-items-center">
 				<img alt="logo" src="../assets/img/logo2noBG.png" height="65" />
@@ -29,21 +29,15 @@ function toggleTheme() {
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav me-auto">
-				<!-- <li>
-					<router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-						About
-					</router-link>
-				</li> -->
-			</ul>
-			<!-- LOGIN COMPONENT HERE -->
-			<div>
-				<button class="btn text-dark me-3 fs-3" @click="toggleTheme"
+			<div class="ms-0 ms-md-auto d-flex me-auto me-md-0 text-end">
+				<!-- LOGIN COMPONENT HERE -->
+				<Login class="pe-3 d-flex" />
+
+				<button class="btn text-dark fs-3 align-content-center" @click="toggleTheme"
 					:title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
 					<i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
 				</button>
 			</div>
-			<Login />
 		</div>
 	</nav>
 </template>

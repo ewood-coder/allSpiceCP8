@@ -4,9 +4,9 @@ import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import { Recipe } from '../models/Recipe.js';
 import { recipesService } from '../services/RecipesService.js';
+import { Account } from '../models/Account.js';
 
 
-// const recipes = computed(() => AppState.recipes)
 
 const filterBy = ref('all')
 
@@ -66,17 +66,17 @@ onMounted(() => {
 					<h1 class="mb-3 mask">All-Spice</h1>
 					<h4 class="mb-3 mask">Cherish Your Family And Their Cooking</h4>
 				</div>
-				<div class="d-flex justify-content-around homeOptions py-1">
+				<div class="d-flex justify-content-around align-items-center homeOptions py-1">
 					<span>
-						<button class="btnColor btn fs-5">Home</button>
+						<button class="btnColor btn fs-custom">Home</button>
 					</span>
 
 					<span>
-						<button class="btnColor btn fs-5">My Recipes</button>
+						<button class="btnColor btn fs-custom">My Recipes</button>
 					</span>
 
 					<span>
-						<button class="btnColor btn fs-5">Favorites</button>
+						<button class="btnColor btn fs-custom">Favorites</button>
 					</span>
 				</div>
 			</div>
@@ -86,14 +86,14 @@ onMounted(() => {
 
 
 	<div class="container-fluid">
-		<!-- SECTION: RECIPES -->
+		<!-- SECTION: FILTER ACCORDION -->
 		<section class="row my-5 pt-3 text-center d-flex justify-content-center">
 
 			<div class="accordion accordion-item col-10 accordionContainer" id="accordion2">
 				<h2 class="accordion-header">
+
 					<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse"
 						data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-
 
 						<div>
 							<h4 class="text-center mb-0">Explore Food Categories:</h4>
@@ -102,12 +102,15 @@ onMounted(() => {
 				</h2>
 
 				<div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordion2">
-					<div class="accordion-body d-flex flex-wrap">
+					<div class="accordion-body d-flex flex-wrap px-0">
 
-						<div class="col-12 col-md-6 text-center fs-3 p-2 py" v-for="filterObj in filters"
-							:key="filterObj.name">
-							<div @click="filterBy = filterObj.name" role="button" class="filter-card rounded selectable"
-								:style="`--bg-img: url(${filterObj.backgroundImage})`">{{ filterObj.name }}</div>
+						<div class="col-12 col-md-6 text-center fs-3 p-2" v-for="filterObj in filters" :key="filterObj.name">
+							<div @click="filterBy = filterObj.name" role="button" class="filter-card rounded selectable mask"
+								:style="`--bg-img: url(${filterObj.backgroundImage})`">
+								<div class="filterBox px-3">
+									{{ filterObj.name }}
+								</div>
+							</div>
 						</div>
 
 					</div>
@@ -119,10 +122,10 @@ onMounted(() => {
 
 		<hr class="my-5" />
 
-
+		<!-- SECTION: RECIPES -->
 		<!-- <h2 class="mb-4 text-center"><u>Recipes</u></h2> -->
-		<section class="d-flex flex-wrap justify-content-center gap-3">
-			<div v-for="recipe in recipes" :key="recipe.id" class="mb-4">
+		<section class="d-flex flex-wrap justify-content-center row">
+			<div v-for="recipe in recipes" :key="recipe.id" class="col-11 col-md-6 col-lg-4 mb-4 px-0 px-md-4 py-2">
 
 				<RecipeCard :recipe="recipe" />
 
@@ -139,7 +142,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .filter-card {
 	height: 10vh;
-	background-color: purple;
+	// background-color: purple;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -163,6 +166,110 @@ onMounted(() => {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
+.fs-custom {
+	font-size: 20px;
+}
+
+// SECTION: MOBILE STYES FOR homeOptions BAR --------------------------
+
+@media only screen and (max-width: 374px) {
+	.homeOptions {
+		border: solid 5px white;
+		background-color: white;
+		border-radius: 5px;
+		width: 16em;
+		height: 4em;
+
+		position: absolute;
+		top: 19.7em;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	}
+
+	.btnColor {
+		color: #219653;
+		// font-weight: bold;
+		font-family: "Sahitya", serif;
+	}
+
+	.fs-custom {
+		font-size: 15px;
+	}
+}
+
+@media (min-width: 375px) and (max-width: 424px) {
+	.homeOptions {
+		border: solid 5px white;
+		background-color: white;
+		border-radius: 5px;
+		width: 18em;
+		height: 4em;
+
+		position: absolute;
+		top: 19.7em;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	}
+
+	.btnColor {
+		color: #219653;
+		// font-weight: bold;
+		font-family: "Sahitya", serif;
+	}
+
+	.fs-custom {
+		font-size: 15px;
+	}
+}
+
+@media (min-width: 425px) and (max-width: 575px) {
+	.homeOptions {
+		border: solid 5px white;
+		background-color: white;
+		border-radius: 5px;
+		width: 21em;
+		height: 4em;
+
+		position: absolute;
+		top: 19.7em;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	}
+
+	.btnColor {
+		color: #219653;
+		// font-weight: bold;
+		font-family: "Sahitya", serif;
+	}
+
+	.fs-custom {
+		font-size: 15px;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+	.homeOptions {
+		border: solid 5px white;
+		background-color: white;
+		border-radius: 5px;
+		width: 25em;
+		height: 4em;
+
+		position: absolute;
+		top: 18em;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	}
+
+	.btnColor {
+		color: #219653;
+		// font-weight: bold;
+		font-family: "Sahitya", serif;
+	}
+
+	.fs-custom {
+		font-size: 15px;
+	}
+}
+
+//  --------------------------------------------------------------
+
 .jumbotron {
 	background-image: url("https://images.squarespace-cdn.com/content/v1/62f14aad574bf656d4fdcf67/73d5aa0f-6a29-4fa5-a8d2-8753e1af4e06/saffron-menu-62.jpg");
 
@@ -177,6 +284,12 @@ onMounted(() => {
 	text-shadow: 2px 2px 2px black;
 }
 
+.filterBox {
+	background-color: rgba(165, 165, 165, 0.1);
+	backdrop-filter: blur(15px);
+	border-radius: 10px;
+}
+
 .btnColor {
 	color: #219653;
 	font-weight: bold;
@@ -188,7 +301,7 @@ onMounted(() => {
 	font-weight: bold;
 	font-family: "Sahitya", serif;
 
-	transition: 0.4s;
+	transition: all 0.4s ease-in-out;
 	background-color: #219653;
 	border-radius: 8px;
 }

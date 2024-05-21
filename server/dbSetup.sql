@@ -54,4 +54,6 @@ CREATE TABLE favorites (
     FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
+SELECT * FROM favorites;
+
 DROP TABLE favorites;
