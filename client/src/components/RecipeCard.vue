@@ -4,12 +4,13 @@ import Pop from '../utils/Pop.js';
 import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
 import { favoritesService } from '../services/FavoritesService.js';
+import { Favorite } from '../models/Favorite.js';
 
 
 const account = computed(() => AppState.account)
 const favorites = computed(() => AppState.favorites)
 const recipes = computed(() => AppState.recipes)
-const isFavorited = computed(() => AppState.favorites.some(favorite => favorite.recipeId == props.recipe.id))
+const isFavorited = computed(() => AppState.favorites.find(favorite => favorite.recipeId == props.recipe.id))
 
 
 const props = defineProps({
@@ -26,7 +27,16 @@ async function FavoriteRecipe(recipeId) {
 	}
 }
 
+async function RemoveFavoriteRecipe(favoriteId) {
+	try {
+		await favoritesService.RemoveFavoriteRecipe(favoriteId)
+	} catch (error) {
+		Pop.error(error)
+	}
+}
+
 // ---------------------------------------------------
+
 </script>
 
 
@@ -41,13 +51,13 @@ async function FavoriteRecipe(recipeId) {
 			</div>
 
 			<div v-else>
-				<button v-if="!isFavorited" @click="favoritesService.FavoriteRecipe()" class="btnLike rounded-4"
+				<button v-if="!isFavorited" @click="FavoriteRecipe(recipe.id)" class="btnLike rounded-4"
 					:title="`Favorite this Recipe`">
 					<i class="mdi mdi-heart-outline fs-3"></i>
 				</button>
 
-				<button v-if="isFavorited" @click="favoritesService.FavoriteRecipe()" class="btnAlreadyLiked rounded-4"
-					:title="`Unfavorite this Recipe`">
+				<button v-if="isFavorited" @click="RemoveFavoriteRecipe(recipe.favoriteId)"
+					class="btnAlreadyLiked rounded-4" :title="`Unfavorite this Recipe`">
 					<i class="mdi mdi-heart fs-3"></i>
 				</button>
 			</div>

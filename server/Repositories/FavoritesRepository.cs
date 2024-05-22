@@ -35,6 +35,7 @@ public class FavoritesRepository
 		(sql, (favorite, recipe, account) =>
 		{
 			recipe.FavoriteId = favorite.Id;
+			// recipe.FavoriteId = favorite.Id;
 			recipe.AccountId = favorite.AccountId;
 			recipe.Creator = account;
 			return recipe;

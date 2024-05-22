@@ -11,7 +11,7 @@ class FavoritesService {
     AppState.activeFavorite = new Favorite(response.data)
   }
   async getFavorites() {
-    const response = await api.get('api/favorites')
+    const response = await api.get('account/favorites')
     logger.log('GOT FAVORITES 💖💖💖', response.data)
     AppState.favorites = response.data.map(pojo => new Favorite(pojo))
   }
@@ -22,6 +22,19 @@ class FavoritesService {
 		logger.log('CREATED FAVORITE 💖', response.data)
 
 		AppState.favorites.push(new Favorite(response.data))
+	}
+
+	async RemoveFavoriteRecipe(favoriteId) {
+		const response = await api.delete(`api/favorites/${favoriteId}`)
+		logger.log('DESTROYED FAVORITE ❌💔', response.data)
+
+		const favoriteIndex = AppState.favorites.findIndex(favorite => favorite.id == favorite.recipeId)
+
+		if (favoriteIndex == -1) {
+			throw new Error("You probably messed up your findIndex, bud")
+		}
+
+		AppState.favorites.splice(favoriteIndex, 1)
 	}
 }
 

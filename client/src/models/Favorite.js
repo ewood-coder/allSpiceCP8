@@ -5,8 +5,8 @@ export class Favorite extends DatabaseItem {
 	super(data) //calls constructor on DataBaseItem
 
 		// id, createdAt, updatedAt inherited from DatabaseItem
-
-		this.recipeId = data.recipeId
+		this.favoriteId = data.favoriteId
+		this.recipeId = data.id
 		this.accountId = data.accountId
   }
 }
