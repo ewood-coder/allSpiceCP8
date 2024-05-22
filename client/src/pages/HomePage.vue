@@ -6,6 +6,7 @@ import { Recipe } from '../models/Recipe.js';
 import { recipesService } from '../services/RecipesService.js';
 import { Account } from '../models/Account.js';
 import RecipeCard from '../components/RecipeCard.vue';
+import { favoritesService } from '../services/FavoritesService.js';
 
 
 
@@ -43,6 +44,8 @@ const filters = [
 	}
 ]
 
+// STUB: FUNCTIONS: -----------------------------
+
 async function getRecipes() {
 	try {
 		await recipesService.getRecipes()
@@ -50,6 +53,8 @@ async function getRecipes() {
 		Pop.error(error)
 	}
 }
+
+// ----------------------------------------------
 
 onMounted(() => {
 	getRecipes()

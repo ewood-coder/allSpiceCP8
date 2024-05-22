@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import RecipeModal from './components/RecipeModal.vue';
 
 
 </script>
@@ -12,6 +13,10 @@ import Navbar from './components/Navbar.vue'
 	<main class="fontPage">
 		<router-view />
 	</main>
+
+
+
+	<RecipeModal />
 </template>
 
 <style lang="scss">

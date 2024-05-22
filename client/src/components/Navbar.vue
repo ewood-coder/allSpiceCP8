@@ -33,7 +33,7 @@ function toggleTheme() {
 				<!-- LOGIN COMPONENT HERE -->
 				<Login class="pe-3 d-flex" />
 
-				<button class="btn text-dark fs-3 align-content-center" @click="toggleTheme"
+				<button class="btn text-dark fs-3 align-content-center hidden" @click="toggleTheme"
 					:title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
 					<i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
 				</button>
@@ -43,6 +43,10 @@ function toggleTheme() {
 </template>
 
 <style scoped>
+.hidden {
+	display: none;
+}
+
 a:hover {
 	text-decoration: none;
 }
