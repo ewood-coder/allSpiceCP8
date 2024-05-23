@@ -211,11 +211,6 @@ async function createRecipe(event) {
 			</div>
 		</section>
 	</div>
-
-	<!-- NOTE the modal has to be here, it's just hidden from view -->
-	<!-- <ModalWrapper modalId="recipeFormModal">
-		<EventForm />
-	</ModalWrapper> -->
 </template>
 
 <style scoped lang="scss">

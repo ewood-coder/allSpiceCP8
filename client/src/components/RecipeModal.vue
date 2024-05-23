@@ -111,11 +111,11 @@ async function deleteRecipe() {
 					<div class="container-fluid">
 						<section class="row">
 
-							<div class="col-6">
+							<div class="col-12 col-lg-6">
 								<img :src="recipe?.img" :alt="`image of ${recipe?.title}`">
 							</div>
 
-							<div class="col-6">
+							<div class="col-12 col-lg-6">
 
 								<div>
 									<h5 class="text-decoration-underline">
@@ -153,20 +153,22 @@ async function deleteRecipe() {
 								</div>
 
 
-								<form v-if="isCreator" action="" class="d-flex gap-2 align-items-center"
+								<form v-if="isCreator" action="" class="d-flex gap-2 align-items-center container-fluid"
 									@submit.prevent="addIngredient">
-									<div class="mb-3">
-										<label for="name" class="form-label">Name:</label>
-										<input type="text" required class="form-control" id="name" name="name">
+									<div class="row justify-content-between align-items-center">
+										<div class="mb-3 col-12 col-md-5">
+											<label for="name" class="form-label">Name:</label>
+											<input type="text" required class="form-control" id="name" name="name">
+										</div>
+										<div class="mb-3 my-auto col-12 col-md-5">
+											<label for="quantity" class="form-label col-12">Quantity:</label>
+											<input type="number" required class="form-control" id="quantity" name="quantity">
+										</div>
+										<button
+											class="btn btn-primary mt-3 d-flex mx-auto fs-5 py-1 align-items-center justify-content-center col-2 col-md-1">
+											<i class="mdi mdi-plus"></i>
+										</button>
 									</div>
-									<div class="mb-3">
-										<label for="quantity" class="form-label">Quantity:</label>
-										<input type="number" required class="form-control" id="quantity" name="quantity">
-									</div>
-									<button
-										class="btn btn-primary mt-3 d-flex mx-auto fs-5 py-1 align-items-center justify-content-center">
-										<i class="mdi mdi-plus"></i>
-									</button>
 								</form>
 
 							</div>
