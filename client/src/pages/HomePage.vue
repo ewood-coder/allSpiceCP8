@@ -158,26 +158,47 @@ async function createRecipe(event) {
 					</div>
 				</div>
 			</div>
-
 		</section>
+
 		<hr class="my-5" />
 
-		<details class="text-center" v-if="account">
-			<summary class="fs-3">Create Recipe</summary>
-			<form action="" @submit.prevent="createRecipe">
-				<input type="text" name="Title" placeholder="Title" class="form-control my-2">
-				<input type="text" name="Instructions" placeholder="Instructions" class="form-control my-2">
-				<select type="text" name="Category" placeholder="Category" class="form-control my-2">
-					<option value="breakfast">Breakfast</option>
-					<option value="lunch">Lunch</option>
-					<option value="dinner">Dinner</option>
-					<option value="snack">Snack</option>
-					<option value="dessert">Dessert</option>
-				</select>
-				<input type="text" name="Img" placeholder="Img Url" class="form-control my-2">
-				<button class="btn btn-primary">Submit</button>
-			</form>
-		</details>
+
+
+
+		<div v-if="account" class="accordion accordion-item col-11 accordionContainer mx-auto mb-5" id="accordion3">
+			<h2 class="accordion-header">
+
+				<button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse"
+					data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+
+					<div>
+						<h4 class="fs-3 mb-0">Create Recipe</h4>
+					</div>
+				</button>
+			</h2>
+
+			<div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordion3">
+				<div class="accordion-body d-flex flex-wrap px-0">
+
+					<div class="col-12 text-center fs-3 p-2">
+						<form action="" @submit.prevent="createRecipe">
+							<input type="text" name="Title" placeholder="Title" class="form-control my-2">
+							<input type="text" name="Instructions" placeholder="Instructions" class="form-control my-2">
+							<select type="text" name="Category" placeholder="Category" class="form-control my-2">
+								<option value="breakfast">Breakfast</option>
+								<option value="lunch">Lunch</option>
+								<option value="dinner">Dinner</option>
+								<option value="snack">Snack</option>
+								<option value="dessert">Dessert</option>
+							</select>
+							<input type="text" name="Img" placeholder="Img Url" class="form-control my-2">
+							<button class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
 
 
 		<!-- SECTION: RECIPES -->

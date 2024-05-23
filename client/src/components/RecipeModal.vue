@@ -135,6 +135,24 @@ async function deleteRecipe() {
 
 								<hr class="my-3" />
 
+								<div class="mb-5">
+									<h5 class="text-decoration-underline">
+										<b>Ingredients:</b>
+									</h5>
+									<ul class="flex gap-2">
+										<li v-for="ingredient in ingredients" :key="ingredient.id">
+											<span>
+												{{ ingredient.name }} &nbsp;|&nbsp; Qty: {{ ingredient.quantity }}
+											</span>
+											<button v-if="isCreator" @click="deleteIngredient(ingredient.id)"
+												class="btn btn-danger p-1 py-0 ms-3">
+												<i class="mdi mdi-trash-can-outline d-flex align-content-center fs-5"></i>
+											</button>
+										</li>
+									</ul>
+								</div>
+
+
 								<form v-if="isCreator" action="" class="d-flex gap-2 align-items-center"
 									@submit.prevent="addIngredient">
 									<div class="mb-3">
@@ -150,21 +168,6 @@ async function deleteRecipe() {
 										<i class="mdi mdi-plus"></i>
 									</button>
 								</form>
-
-								<div>
-									<h5 class="text-decoration-underline">
-										<b>Ingredients:</b>
-									</h5>
-									<ul class="flex gap-2">
-										<li v-for="ingredient in ingredients" :key="ingredient.id">
-											<span> {{ ingredient.name }}</span>
-											<button v-if="isCreator" @click="deleteIngredient(ingredient.id)"
-												class="btn btn-danger p-1">
-												<i class="mdi mdi-trash-can-outline"></i>
-											</button>
-										</li>
-									</ul>
-								</div>
 
 							</div>
 

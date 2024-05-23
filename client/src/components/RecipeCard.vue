@@ -52,7 +52,8 @@ async function setActiveRecipe() {
 
 			<div class="px-2 py-1 fontSize text-capitalize">{{ recipe.category }}</div>
 
-			{{ recipe.id }}
+			<!-- NOTE: just for checking recipe id's for testing -->
+			<!-- {{ recipe.id }} -->
 
 			<div v-if="account == null">
 				<i class="mdi mdi-heart-off-outline fs-3 rounded-4 btnLikeOff px-2" title="Login Required"></i>
