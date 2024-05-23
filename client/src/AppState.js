@@ -9,15 +9,17 @@ export const AppState = reactive({
 
   /** @type {import('./models/Recipe.js').Recipe[]} recipes from the database*/
   recipes: [],
-  /** @type {import('./models/Recipe.js').Recipe} single recipe from the database*/
+  /** @type {import('./models/Recipe.js').Recipe | null} single recipe from the database*/
   activeRecipe: null,
 
   /** @type {import('./models/Favorite.js').Favorite[]} favorites from the database*/
   favorites: [],
-  /** @type {import('./models/Favorite.js').Favorite} single favorite from the database*/
+  /** @type {import('./models/Favorite.js').Favorite | null} single favorite from the database*/
   activeFavorite: null,
 
 
   /** @type {import('./models/Ingredient.js').Ingredient[]} ingredients from the database*/
   ingredients: [],
+  /** @type {import('./models/Ingredient.js').Ingredient[]} single ingredient from the database*/
+  activeIngredients: [],
 })

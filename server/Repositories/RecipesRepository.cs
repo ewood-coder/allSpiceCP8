@@ -62,6 +62,44 @@ public class RecipesRepository
 	}
 
 
+	// STUB: GET RECIPES BY USER ID
+	internal List<Recipe> GetRecipesByUserId(string userId)
+	{
+		Console.WriteLine("userId: " + userId);
+		string sql = @"
+			SELECT
+			recipes.*,
+			accounts.*
+			FROM recipes
+			JOIN accounts ON recipes.creatorId = accounts.id
+			WHERE recipes.creatorId = @userId;";
+
+		List<Recipe> recipes = _db.Query<Recipe, Account, Recipe>(sql, PopulateCreator, new { userId }).ToList();
+
+		return recipes;
+	}
+
+
+	// TODO: GET LIKED RECIPES BY USER ID
+	internal List<Recipe> GetLikedRecipesByUserId(string userId)
+	{
+		Console.WriteLine("userId: " + userId);
+
+		string sql = @"
+			SELECT
+			recipes.*,
+			accounts.*
+			FROM recipes
+			JOIN accounts ON recipes.creatorId = accounts.id
+			JOIN likes ON likes.recipeId = recipes.id
+			WHERE likes.accountId = @userId;";
+
+		List<Recipe> recipes = _db.Query<Recipe, Account, Recipe>(sql, PopulateCreator, new { userId }).ToList();
+
+		return recipes;
+	}
+
+
 
 	// STUB: GET RECIPE BY ID
 	internal Recipe GetRecipeById(int recipeId)

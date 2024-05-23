@@ -43,6 +43,22 @@ public class RecipesService
 
 
 
+	internal List<Recipe> GetRecipesByUserId(string userId)
+	{
+		List<Recipe> recipes = _recipesRepository.GetRecipesByUserId(userId);
+		return recipes;
+	}
+
+
+
+	internal List<Recipe> GetLikedRecipesByUserId(string userId)
+	{
+		List<Recipe> recipes = _recipesRepository.GetLikedRecipesByUserId(userId);
+		return recipes;
+	}
+
+
+
 	// STUB: UPDATE RECIPErecipe
 	internal Recipe UpdateRecipe(int recipeId, string userId, Recipe recipeData)
 	{

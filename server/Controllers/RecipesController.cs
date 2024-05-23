@@ -56,6 +56,38 @@ public class RecipesController : ControllerBase
 
 
 
+	[HttpGet("my")]
+	public async Task<ActionResult<List<Recipe>>> GetMyRecipes()
+	{
+		try
+		{
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+			List<Recipe> recipes = _recipesService.GetLikedRecipesByUserId(userInfo.Id);
+			return Ok(recipes);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+	[HttpGet("liked")]
+	public async Task<ActionResult<List<Recipe>>> GetLikedRecipes()
+	{
+		try
+		{
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+			List<Recipe> recipes = _recipesService.GetLikedRecipesByUserId(userInfo.Id);
+			return Ok(recipes);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+
+
 	// STUB: GET RECIPE BY ID
 	[HttpGet("{recipeId}")]
 	public ActionResult<Recipe> GetRecipeById(int recipeId)

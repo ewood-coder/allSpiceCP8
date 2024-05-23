@@ -25,16 +25,18 @@ class FavoritesService {
 	}
 
 	async RemoveFavoriteRecipe(favoriteId) {
-		const response = await api.delete(`api/favorites/${favoriteId}`)
-		logger.log('DESTROYED FAVORITE ❌💔', response.data)
 
-		const favoriteIndex = AppState.favorites.findIndex(favorite => favorite.id == favorite.recipeId)
+		const favoriteIndex = AppState.favorites.findIndex(favorite => favorite.favoriteId == favoriteId)
 
 		if (favoriteIndex == -1) {
 			throw new Error("You probably messed up your findIndex, bud")
 		}
 
 		AppState.favorites.splice(favoriteIndex, 1)
+		AppState.favorites = [...AppState.favorites]
+
+		const response = await api.delete(`api/favorites/${favoriteId}`)
+		logger.log('DESTROYED FAVORITE ❌💔', response.data)
 	}
 }
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, effect, onMounted, ref, watchEffect } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import { Recipe } from '../models/Recipe.js';
@@ -11,10 +11,27 @@ import { favoritesService } from '../services/FavoritesService.js';
 
 
 const filterBy = ref('all')
+const getBy = ref("home")
+
+const account = computed(() => AppState.account)
+const favorites = computed(() => AppState.favorites)
 
 const recipes = computed(() => {
-	if (filterBy.value == 'all') return AppState.recipes
-	return AppState.recipes.filter(event => event.category == filterBy.value)
+	let recipesToShow = AppState.recipes
+	if (filterBy.value != 'all') {
+		recipesToShow = recipesToShow.filter(event => event.category == filterBy.value)
+	}
+
+	switch (getBy.value) {
+		case 'home':
+			return recipesToShow
+		case 'my':
+			return recipesToShow.filter(recipe => recipe.creatorId == account.value.id)
+		case 'fav':
+			return recipesToShow.filter(recipe => favorites.value.find(f => f.recipeId == recipe.id))
+	}
+
+	return recipesToShow
 })
 
 const filters = [
@@ -46,19 +63,38 @@ const filters = [
 
 // STUB: FUNCTIONS: -----------------------------
 
-async function getRecipes() {
+async function getRecipes(value) {
 	try {
 		await recipesService.getRecipes()
 	} catch (error) {
 		Pop.error(error)
 	}
 }
-
 // ----------------------------------------------
 
 onMounted(() => {
 	getRecipes()
 })
+
+
+async function createRecipe(event) {
+	event.preventDefault()
+	const form = event.target
+	const recipe = {
+		title: form.Title.value,
+		instructions: form.Instructions.value,
+		category: form.Category.value,
+		img: form.Img.value
+	}
+	try {
+		await recipesService.createRecipe(recipe)
+		Pop.success('Recipe Created')
+		form.reset()
+	} catch (error) {
+		Pop.error(error)
+	}
+
+}
 
 </script>
 
@@ -74,15 +110,15 @@ onMounted(() => {
 				</div>
 				<div class="d-flex justify-content-around align-items-center homeOptions py-1">
 					<span>
-						<button class="btnColor btn fs-custom">Home</button>
+						<button class="btnColor btn fs-custom" @click="getBy = 'home'">Home</button>
 					</span>
 
 					<span>
-						<button class="btnColor btn fs-custom">My Recipes</button>
+						<button class="btnColor btn fs-custom" @click="getBy = 'my'">My Recipes</button>
 					</span>
 
 					<span>
-						<button class="btnColor btn fs-custom">Favorites</button>
+						<button class="btnColor btn fs-custom" @click="getBy = 'fav'">Favorites</button>
 					</span>
 				</div>
 			</div>
@@ -124,9 +160,25 @@ onMounted(() => {
 			</div>
 
 		</section>
-
-
 		<hr class="my-5" />
+
+		<details class="text-center" v-if="account">
+			<summary class="fs-3">Create Recipe</summary>
+			<form action="" @submit.prevent="createRecipe">
+				<input type="text" name="Title" placeholder="Title" class="form-control my-2">
+				<input type="text" name="Instructions" placeholder="Instructions" class="form-control my-2">
+				<select type="text" name="Category" placeholder="Category" class="form-control my-2">
+					<option value="breakfast">Breakfast</option>
+					<option value="lunch">Lunch</option>
+					<option value="dinner">Dinner</option>
+					<option value="snack">Snack</option>
+					<option value="dessert">Dessert</option>
+				</select>
+				<input type="text" name="Img" placeholder="Img Url" class="form-control my-2">
+				<button class="btn btn-primary">Submit</button>
+			</form>
+		</details>
+
 
 		<!-- SECTION: RECIPES -->
 		<!-- <h2 class="mb-4 text-center"><u>Recipes</u></h2> -->
@@ -140,7 +192,7 @@ onMounted(() => {
 	</div>
 
 	<!-- NOTE the modal has to be here, it's just hidden from view -->
-	<!-- <ModalWrapper modalId="eventFormModal">
+	<!-- <ModalWrapper modalId="recipeFormModal">
 		<EventForm />
 	</ModalWrapper> -->
 </template>

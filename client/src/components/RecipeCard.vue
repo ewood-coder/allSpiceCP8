@@ -5,6 +5,7 @@ import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
 import { favoritesService } from '../services/FavoritesService.js';
 import { Favorite } from '../models/Favorite.js';
+import { recipesService } from '../services/RecipesService.js';
 
 
 const account = computed(() => AppState.account)
@@ -35,6 +36,11 @@ async function RemoveFavoriteRecipe(favoriteId) {
 	}
 }
 
+async function setActiveRecipe() {
+	console.log('setting active recipe', props.recipe)
+	await recipesService.setActiveRecipe(props.recipe)
+}
+
 // ---------------------------------------------------
 
 </script>
@@ -46,6 +52,8 @@ async function RemoveFavoriteRecipe(favoriteId) {
 
 			<div class="px-2 py-1 fontSize text-capitalize">{{ recipe.category }}</div>
 
+			{{ recipe.id }}
+
 			<div v-if="account == null">
 				<i class="mdi mdi-heart-off-outline fs-3 rounded-4 btnLikeOff px-2" title="Login Required"></i>
 			</div>
@@ -56,7 +64,7 @@ async function RemoveFavoriteRecipe(favoriteId) {
 					<i class="mdi mdi-heart-outline fs-3"></i>
 				</button>
 
-				<button v-if="isFavorited" @click="RemoveFavoriteRecipe(recipe.favoriteId)"
+				<button v-if="isFavorited" @click="RemoveFavoriteRecipe(isFavorited.favoriteId)"
 					class="btnAlreadyLiked rounded-4" :title="`Unfavorite this Recipe`">
 					<i class="mdi mdi-heart fs-3"></i>
 				</button>
@@ -64,7 +72,7 @@ async function RemoveFavoriteRecipe(favoriteId) {
 		</div>
 
 		<img :src="recipe.img" :alt="recipe.title" data-bs-toggle="modal" data-bs-target="#recipeModal" role="button"
-			:title="`recipe information for ${recipe.title}`" class="recipe-img">
+			@click="setActiveRecipe()" :title="`recipe information for ${recipe.title}`" class="recipe-img">
 		<div class="px-4 py-2 bgColor">
 			<div class="fs-3">{{ recipe.title }}</div>
 		</div>
