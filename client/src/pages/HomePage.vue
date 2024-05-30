@@ -70,12 +70,6 @@ async function getRecipes(value) {
 		Pop.error(error)
 	}
 }
-// ----------------------------------------------
-
-onMounted(() => {
-	getRecipes()
-})
-
 
 async function createRecipe(event) {
 	event.preventDefault()
@@ -93,10 +87,16 @@ async function createRecipe(event) {
 	} catch (error) {
 		Pop.error(error)
 	}
-
 }
 
+// ----------------------------------------------
+
+onMounted(() => {
+	getRecipes()
+})
+
 </script>
+
 
 <template>
 
