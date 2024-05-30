@@ -16,9 +16,8 @@ class RecipesService {
     logger.log('GOT RECIPE BY ID 📃', response.data)
     AppState.activeRecipe = new Recipe(response.data)
   }
+  
   async getRecipes() {
-
-
     const response = await api.get('api/recipes')
     logger.log('GOT RECIPES 📃📃📃', response.data)
     AppState.recipes = response.data.map(pojo => new Recipe(pojo))
