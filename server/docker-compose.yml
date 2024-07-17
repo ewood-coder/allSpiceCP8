@@ -1,9 +1,9 @@
 version: '3'
 services:
   app:
-    image: your-dockerhub-username/allSpiceCP8:latest
+    image: your-dockerhub-username/allspice:latest
     restart: unless-stopped
     env_file:
-      - allSpiceCP8-env
+      - allspice-env
     ports:
-      - "7045:80"
+      - "7046:80"
