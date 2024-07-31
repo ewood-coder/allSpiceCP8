@@ -28,7 +28,7 @@ jobs:
       - name: Build and Push Docker Image 🐋
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/arm64, linux/amd64
+          platforms: linux/amd64
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.REPO_NAME }}:latest
           file: server/Dockerfile
           context: .
